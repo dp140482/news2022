@@ -29,7 +29,7 @@ app.post("/add", (req, res) => {
   acrmHandler(req, res, "add", filePathAndName);
 });
 
-app.put("/change:id", (req, res) => {
+app.put("/change/:id", (req, res) => {
   console.log("PUT");
   acrmHandler(req, res, "change", filePathAndName);
 });

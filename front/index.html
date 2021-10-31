@@ -19,6 +19,7 @@
         const errorElement = document.getElementById("errorConsole");
         const consoleElement = document.getElementById("console");
         const url = req => { return address + req; }
+        const msgToChange = 1;
 
         const getListener = () => {
             fetch(url('/get'))
@@ -34,8 +35,8 @@
         };
 
         const newsmsgToSend = {
-            tags: 'Россия, IT',
-            text: 'Через сервер news2022 добавлено новое сообщение!'
+            tags: 'США',
+            text: 'Вот и проснулись…'
         };
 
         const postListener = () => {
@@ -53,8 +54,25 @@
             .then(result => {
                 if (result.result === 1) {
                     consoleElement.innerHTML += `<p>Успех POST-запроса!</p>`;
-                } else {
-                    errorElement.innerText += '\n' + result;
+                }
+            });
+        };
+
+        const putListener = () => {
+            fetch(url('/change/' + msgToChange), {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(newsmsgToSend)
+            })
+            .then(result => result.json())
+            .catch(error => {
+                errorElement.innerText += '\n' + error;
+            })
+            .then(result => {
+                if (result.result === 1) {
+                    consoleElement.innerHTML += `<p>Успех PUT-запроса!</p>`;
                 }
             });
         };
@@ -73,14 +91,13 @@
             .then(result => {
                 if (result.result === 1) {
                     consoleElement.innerHTML += `<p>Успех DELETE-запроса!</p>`;
-                } else {
-                    errorElement.innerText += '\n' + result;
                 }
             });
         };
 
         document.getElementById("getBtn").addEventListener('click', getListener);
         document.getElementById("postBtn").addEventListener('click', postListener);
+        document.getElementById("putBtn").addEventListener('click', putListener);
         document.getElementById("deleteBtn").addEventListener('click', deleteListener);
     </script>
 </body>
