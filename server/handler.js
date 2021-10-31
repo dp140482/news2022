@@ -13,9 +13,7 @@ let readHandler = (req, res, file) => {
       console.log(err);
       res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
     } else {
-      res.send(
-        JSON.stringify({})
-      );
+      res.send(data);
     }
   });
 };

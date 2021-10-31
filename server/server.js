@@ -2,10 +2,11 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const {acrmHandler, readHandler} = require("./handler");
-const filePathAndName = "/server/db/data.json";
 
 app.use(express.json());
-app.use("/", express.static("server"));
+const filePathAndName = __dirname + "/db/data.json";
+
+
 app.use(cors());
 
 app.use((req, res, next) => {
@@ -18,19 +19,23 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/api/paymentlist", (req, res) => {
+app.get("/get", (req, res) => {
+  console.log("GET");
   readHandler(req, res, filePathAndName)
 });
 
-app.post("/api/paymentlist", (req, res) => {
+app.post("/add", (req, res) => {
+  console.log("POST");
   acrmHandler(req, res, "add", filePathAndName);
 });
 
-app.put("/api/paymentlist/:id", (req, res) => {
+app.put("/change:id", (req, res) => {
+  console.log("PUT");
   acrmHandler(req, res, "change", filePathAndName);
 });
 
-app.delete("/api/paymentlist/:id", (req, res) => {
+app.delete("/remove", (req, res) => {
+  console.log("DELETE");
   acrmHandler(req, res, "remove", filePathAndName);
 });
 
