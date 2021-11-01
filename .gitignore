@@ -1,13 +1,25 @@
 # dependencies
-/node_modules
+/srv/node_modules
+/front/node_modules
+/front/.pnp
+.pnp.js
 
 # testing
-/coverage
+/front/coverage
+/srv/coverage
 
 # production
-/build
+/front/build
+/srv/build
 
 # misc
 .DS_Store
+srv/server/db/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
 npm-debug.log*
-server/db/
+yarn-debug.log*
+yarn-error.log*
