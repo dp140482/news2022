@@ -1,23 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form>
+        <fieldset className="enFieldset upFieldset">
+          <div>
+            <label>Дата: </label>
+            <input type="text" placeholder="YYYY-MM-DD" />
+          </div><div className="timeBlock">
+            <label>Время: </label>
+            <input type="text" placeholder="HH:MM" />
+          </div>
+        </fieldset>
+        <fieldset className="enFieldset textFieldset">
+          <label>Текст: </label>
+          <textarea className="msgArea" />
+        </fieldset>
+        <fieldset className="enFieldset downFieldset">
+          <label>Темы: </label>
+          <input type="text" className="tagsArea" />
+        </fieldset>
+        <button className="sendBtn">Отправить</button>
+      </form>
     </div>
   );
 }
