@@ -1,11 +1,11 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const {acrmHandler, readHandler} = require("./handler");
+const {acrmHandler, readHandler, saveHTMLHandler} = require("./handler");
 
 app.use(express.json());
-const filePathAndName = __dirname + "/db/data.json";
-
+const datafile = __dirname + "/db/data.json";
+const htmlfile = __dirname + "/db/chrono.html";
 
 app.use(cors());
 
@@ -21,22 +21,27 @@ app.use((req, res, next) => {
 
 app.get("/get", (req, res) => {
   console.log("GET");
-  readHandler(req, res, filePathAndName)
+  readHandler(req, res, datafile)
+});
+
+app.get("/save/:date", (req, res) => {
+  console.log("SAVE HTML");
+  saveHTMLHandler(req, res, datafile, htmlfile)
 });
 
 app.post("/add", (req, res) => {
   console.log("POST");
-  acrmHandler(req, res, "add", filePathAndName);
+  acrmHandler(req, res, "add", datafile);
 });
 
 app.put("/change/:id", (req, res) => {
   console.log("PUT");
-  acrmHandler(req, res, "change", filePathAndName);
+  acrmHandler(req, res, "change", datafile);
 });
 
 app.delete("/remove", (req, res) => {
   console.log("DELETE");
-  acrmHandler(req, res, "remove", filePathAndName);
+  acrmHandler(req, res, "remove", datafile);
 });
 
 const port = process.env.PORT || 3003;

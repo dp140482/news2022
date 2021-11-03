@@ -1,5 +1,6 @@
 const method = require("./methods");
 const fs = require("fs");
+const htmltools = require("./htmltools");
 
 const actions = {
   add: method.add,
@@ -7,7 +8,7 @@ const actions = {
   remove: method.remove,
 };
 
-let readHandler = (req, res, file) => {
+const readHandler = (req, res, file) => {
   fs.readFile(file, "utf-8", (err, data) => {
     if (err) {
       console.log(err);
@@ -18,7 +19,26 @@ let readHandler = (req, res, file) => {
   });
 };
 
-let acrmHandler = (req, res, action, file) => {
+const saveHTMLHandler = (req, res, file, htmlfile) => {
+  const date = req.params.date;
+  fs.readFile(file, "utf-8", (err, data) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
+    } else {
+      let htmlContent = htmltools.toHTML(JSON.parse(data), date);
+      fs.writeFile(htmlfile, htmlContent, (err) => {
+        if (err) {
+          res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
+        } else {
+          res.send(JSON.stringify({ result: 1 }));
+        }
+      });
+    }
+  });
+};
+
+const acrmHandler = (req, res, action, file) => {
   fs.readFile(file, "utf-8", (err, data) => {
     if (err) {
       res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
@@ -35,4 +55,8 @@ let acrmHandler = (req, res, action, file) => {
   });
 };
 
-module.exports = {acrmHandler, readHandler};
+module.exports = {
+  acrmHandler,
+  readHandler,
+  saveHTMLHandler
+};

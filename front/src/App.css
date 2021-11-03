@@ -2,8 +2,8 @@
   padding: 15px 20px 5px 5px;
   height: 97vh;
   font-size: 13pt;
-  text-align: right;
-  background-color: gainsboro;
+  background-color: antiquewhite;
+  font-family: "Helvetica Neue", "Calibri", "Arial", sans-serif;
 }
 
 .enFieldset {
@@ -16,13 +16,14 @@
   text-align: left;
 }
 
-.msgArea {
+.msgTextArea {
   width: 100%;
   height: 72vh;
+  font-family: "Helvetica Neue", "Calibri", "Arial", sans-serif;
   font-size: 13pt;
   line-height: 150%;
   padding: 2px 7px;
-  text-align: justify;
+  text-align: left;
 }
 
 .upFieldset {
@@ -39,7 +40,7 @@
   margin-left: 50px;
 }
 
-.tagsArea {
+.msgTagsInput {
   width: 100%;
   margin: 0 5px;
   font-size: 13pt;
@@ -49,4 +50,13 @@
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 7px;
+}
+
+.sendForm {
+  text-align: right;
+}
+
+.saveBtn {
+  font-size: 16px;
+  padding: 5px 10px;
 }

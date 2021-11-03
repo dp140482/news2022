@@ -14,7 +14,9 @@
 
 # misc
 .DS_Store
-srv/server/db/
+/srv/server/db
+/srv/server/css
+
 .env.local
 .env.development.local
 .env.test.local
