@@ -5,7 +5,7 @@ const {acrmHandler, readHandler, saveHTMLHandler} = require("./handler");
 
 app.use(express.json());
 const datafile = __dirname + "/db/data.json";
-const htmlfile = __dirname + "/db/chrono.html";
+const htmlpath = __dirname + "/db/";
 
 app.use(cors());
 
@@ -25,8 +25,8 @@ app.get("/get", (req, res) => {
 });
 
 app.get("/save/:date", (req, res) => {
-  console.log("SAVE HTML");
-  saveHTMLHandler(req, res, datafile, htmlfile)
+  console.log("SAVE HTML " + req.params.date);
+  saveHTMLHandler(req, res, datafile, htmlpath)
 });
 
 app.post("/add", (req, res) => {

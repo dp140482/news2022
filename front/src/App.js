@@ -41,6 +41,9 @@ const App = () => {
       text: textToSent
     });
     setMsgText(textToSent);
+    setTimeout(() => {
+      setMsgText('');
+    }, 1000);
   }
 
   const handleSave = () => {
