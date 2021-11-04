@@ -15,7 +15,11 @@ const readHandler = (req, res, file) => {
       console.log(err);
       res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
     } else {
-      res.send(data);
+      let content = JSON.parse(data);
+      if (req.params.date) {
+        content = content.filter(msg => msg.date === req.params.date);
+      }
+      res.send(JSON.stringify(content));
     }
   });
 };

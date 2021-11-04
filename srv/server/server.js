@@ -19,8 +19,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/get", (req, res) => {
-  console.log("GET");
+app.get("/get/:date", (req, res) => {
+  console.log("GET " + (req.params.date ? req.params.date : 'all'));
   readHandler(req, res, datafile)
 });
 

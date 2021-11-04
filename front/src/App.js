@@ -40,10 +40,7 @@ const App = () => {
       tags: tags, 
       text: textToSent
     });
-    setMsgText(textToSent);
-    setTimeout(() => {
-      setMsgText('');
-    }, 1000);
+    setMsgText('');
   }
 
   const handleSave = () => {
