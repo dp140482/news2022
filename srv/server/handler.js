@@ -60,8 +60,21 @@ const acrmHandler = (req, res, action, file) => {
   });
 };
 
+const ultimaHandler = (req, res, file) => {
+  fs.writeFile(file, JSON.stringify(req.body), (err) => {
+    if (err) {
+      console.error(err);
+      res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
+    } else {
+      console.log('success');
+      res.send(JSON.stringify({ result: 1 }));
+    }
+  });
+};
+
 module.exports = {
   acrmHandler,
   readHandler,
-  saveHTMLHandler
+  saveHTMLHandler,
+  ultimaHandler
 };

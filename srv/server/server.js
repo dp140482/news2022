@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const {acrmHandler, readHandler, saveHTMLHandler} = require("./handler");
+const handlers = require("./handler");
 
 app.use(express.json());
 const datafile = __dirname + "/db/data.json";
@@ -19,29 +19,39 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/get", (req, res) => {
+  console.log("GET");
+  handlers.readHandler(req, res, datafile)
+});
+
 app.get("/get/:date", (req, res) => {
-  console.log("GET " + (req.params.date ? req.params.date : 'all'));
-  readHandler(req, res, datafile)
+  console.log("GET " + req.params.date);
+  handlers.readHandler(req, res, datafile)
 });
 
 app.get("/save/:date", (req, res) => {
   console.log("SAVE HTML " + req.params.date);
-  saveHTMLHandler(req, res, datafile, htmlpath)
+  handlers.saveHTMLHandler(req, res, datafile, htmlpath)
 });
 
 app.post("/add", (req, res) => {
   console.log("POST");
-  acrmHandler(req, res, "add", datafile);
+  handlers.acrmHandler(req, res, "add", datafile);
+});
+
+app.put("/changeAll", (req, res) => {
+  console.log("PUT");
+  handlers.ultimaHandler(req, res, datafile);
 });
 
 app.put("/change/:id", (req, res) => {
   console.log("PUT");
-  acrmHandler(req, res, "change", datafile);
+  handlers.acrmHandler(req, res, "change", datafile);
 });
 
 app.delete("/remove", (req, res) => {
   console.log("DELETE");
-  acrmHandler(req, res, "remove", datafile);
+  handlers.acrmHandler(req, res, "remove", datafile);
 });
 
 const port = process.env.PORT || 3003;
