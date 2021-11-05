@@ -6,7 +6,7 @@ const datetools = require("./datetools");
 const actions = {
   add: method.add,
   change: method.change,
-  remove: method.remove,
+  remove: method.remove
 };
 
 const readHandler = (req, res, file) => {
@@ -43,7 +43,7 @@ const saveHTMLHandler = (req, res, file, htmlpath) => {
   });
 };
 
-const acrmHandler = (req, res, action, file) => {
+const acrcHandler = (req, res, action, file) => {
   fs.readFile(file, "utf-8", (err, data) => {
     if (err) {
       res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
@@ -63,7 +63,7 @@ const acrmHandler = (req, res, action, file) => {
 const checkAndPrepare = (res, file) => {
   fs.readFile(file, "utf-8", (err) => {
     if (err) {
-      fs.writeFile(file, JSON.stringify([]), (err) => {
+      fs.writeFile(file, JSON.stringify([], null, 4), (err) => {
         if (err) {
           console.error(err);
           res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
@@ -78,21 +78,45 @@ const checkAndPrepare = (res, file) => {
 };
 
 const ultimaHandler = (req, res, file) => {
-  fs.writeFile(file, JSON.stringify(req.body), (err) => {
+  fs.writeFile(file, JSON.stringify(req.body, null, 4), (err) => {
     if (err) {
       console.error(err);
       res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
     } else {
-      console.log('success');
+      console.log("Written down " + req.body.length + " messages");
       res.send(JSON.stringify({ result: 1 }));
     }
   });
 };
 
+const cutHandler = (req, res, file, path) => {
+  fs.readFile(file, "utf-8", (err, data) => {
+    if (err) {
+      res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
+    } else {
+      const sdate = req.params.date;
+      const oData = JSON.parse(data);
+      const cutData = oData.filter(msg => msg.date === sdate);
+      const modData = oData.filter(msg => msg.date !== sdate);
+      fs.writeFile(path + sdate + '.json', JSON.stringify(cutData, null, 4), err => {
+        if (err) console.error(err);
+      });
+      fs.writeFile(file, JSON.stringify(modData, null, 4), err => {
+        if (err) {
+          res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
+        } else {
+          res.send(JSON.stringify(cutData));
+        }
+      });
+    }
+  });
+};
+
 module.exports = {
-  acrmHandler,
+  acrcHandler,
   readHandler,
   saveHTMLHandler,
   checkAndPrepare,
-  ultimaHandler
+  ultimaHandler,
+  cutHandler
 };

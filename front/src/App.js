@@ -43,12 +43,6 @@ const App = () => {
     setMsgText('');
   }
 
-  /*
-  const handleSave = () => {
-    return fetch('http://localhost:3003/save/' + date);
-  }
-  */
-
   const handleTextChange = event => {
     setMsgText(event.target.value);
   }

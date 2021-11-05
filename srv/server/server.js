@@ -5,8 +5,8 @@ const handlers = require("./handler");
 
 app.use(express.json());
 let store = "data.json";
-let datafile = __dirname + "/db/" + store;
-const htmlpath = __dirname + "/db/";
+const path = __dirname + "/db/";
+let datafile = path + store;
 
 app.use(cors());
 
@@ -30,9 +30,14 @@ app.get("/get/:date", (req, res) => {
   handlers.readHandler(req, res, datafile)
 });
 
+app.get("/cut/:date", (req, res) => {
+  console.log("Cut " + req.params.date);
+  handlers.cutHandler(req, res, datafile, path)
+});
+
 app.get("/save/:date", (req, res) => {
   console.log("Save HTML " + req.params.date);
-  handlers.saveHTMLHandler(req, res, datafile, htmlpath)
+  handlers.saveHTMLHandler(req, res, datafile, path)
 });
 
 app.get("/commute-store/:store", (req, res) => {
@@ -43,23 +48,23 @@ app.get("/commute-store/:store", (req, res) => {
 });
 
 app.post("/add", (req, res) => {
-  console.log("POST");
-  handlers.acrmHandler(req, res, "add", datafile);
+  console.log("Add record to " + store);
+  handlers.acrcHandler(req, res, "add", datafile);
 });
 
 app.put("/changeAll", (req, res) => {
-  console.log("PUT");
+  console.log("Change all records in " + store);
   handlers.ultimaHandler(req, res, datafile);
 });
 
 app.put("/change/:id", (req, res) => {
-  console.log("PUT");
-  handlers.acrmHandler(req, res, "change", datafile);
+  console.log("Change record #" + req.params.id + "in " + store);
+  handlers.acrcHandler(req, res, "change", datafile);
 });
 
-app.delete("/remove", (req, res) => {
-  console.log("DELETE");
-  handlers.acrmHandler(req, res, "remove", datafile);
+app.delete("/remove/:id", (req, res) => {
+  console.log("Remove record #" + req.params.id + "in " + store);
+  handlers.acrcHandler(req, res, "remove", datafile);
 });
 
 const port = process.env.PORT || 3003;

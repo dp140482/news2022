@@ -5,6 +5,7 @@ import './App.css';
 
 const App = () => {
   const [data, setData] = React.useState([]);
+  const [file, setFile] = React.useState('data.json');
 
   React.useEffect(
     () => {
@@ -13,6 +14,21 @@ const App = () => {
       .then(res => setData(res))
     }, []
   );
+
+  const handleRefresh = async () => {
+    await fetch('http://localhost:3003/commute-store/' + file);
+    await fetch('http://localhost:3003/get')
+    .then(res => res.json())
+    .then(res => setData(res));
+  }
+
+  const handleReid = () => {
+    let copy = [...data];
+    for (let i = 0; i < data.length; i++) {
+      copy[i].id = i;
+    }
+    setData(copy);
+  }
 
   const handleJoin = id => {
     const idx = data.findIndex(msg => msg.id === id);
@@ -53,7 +69,11 @@ const App = () => {
 
   return (
     <div className="App">
+      Файл:
+      <input value={file} className="mainInput" onChange={event => setFile(event.target.value) } />
+      <button onClick={ handleRefresh }>Refresh</button>
       <button onClick={ handleSave }>SAVE</button>
+      <button onClick={ handleReid }>REid</button>
       {data.map(msg => <div className="container" id={ msg.id } key={ msg.id }>
         <article className="message">
           <div className="message-tags">{ msg.tags }</div>

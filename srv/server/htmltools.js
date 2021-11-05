@@ -51,12 +51,14 @@ const imprintTime = time => {
     return time ? `<span>${ time }</span>` : '';
 };
 
+const getMsgBody = msg => {
+    return msg.text.reduce((acc, p) => acc + '<p>' + p + '</p>', '');
+}
+
 const getArticle = msg => {
     return `<article class="message">
-<div class="message-tags">${ msg.tags }</div>
-<p>${ imprintTime(msg.time) }
-${ msg.text }
-</p>
+<div class="message-tags">${ msg.tags } ${ imprintTime(msg.time) }</div>
+${ getMsgBody(msg) }
 </article>`;
 };
 
