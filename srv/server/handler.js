@@ -60,6 +60,23 @@ const acrmHandler = (req, res, action, file) => {
   });
 };
 
+const checkAndPrepare = (res, file) => {
+  fs.readFile(file, "utf-8", (err) => {
+    if (err) {
+      fs.writeFile(file, JSON.stringify([]), (err) => {
+        if (err) {
+          console.error(err);
+          res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
+        } else {
+          res.send(JSON.stringify({ result: 1 }));
+        }
+      });
+    } else {
+      res.send(JSON.stringify({ result: 1 }));
+    }
+  });
+};
+
 const ultimaHandler = (req, res, file) => {
   fs.writeFile(file, JSON.stringify(req.body), (err) => {
     if (err) {
@@ -76,5 +93,6 @@ module.exports = {
   acrmHandler,
   readHandler,
   saveHTMLHandler,
+  checkAndPrepare,
   ultimaHandler
 };

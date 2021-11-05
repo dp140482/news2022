@@ -38,14 +38,16 @@ const App = () => {
       date: date,
       time: time,
       tags: tags, 
-      text: textToSent
+      text: [textToSent]
     });
     setMsgText('');
   }
 
+  /*
   const handleSave = () => {
     return fetch('http://localhost:3003/save/' + date);
   }
+  */
 
   const handleTextChange = event => {
     setMsgText(event.target.value);
@@ -82,7 +84,6 @@ const App = () => {
         </fieldset>
         <button className="sendBtn" onClick={handleButtonClick}>Отправить</button>
       </form>
-      <button className="saveBtn" onClick={handleSave}>Сохранить HTML</button>
     </div>
   );
 }

@@ -4,7 +4,8 @@ const cors = require("cors");
 const handlers = require("./handler");
 
 app.use(express.json());
-const datafile = __dirname + "/db/data.json";
+let store = "data.json";
+let datafile = __dirname + "/db/" + store;
 const htmlpath = __dirname + "/db/";
 
 app.use(cors());
@@ -30,8 +31,15 @@ app.get("/get/:date", (req, res) => {
 });
 
 app.get("/save/:date", (req, res) => {
-  console.log("SAVE HTML " + req.params.date);
+  console.log("Save HTML " + req.params.date);
   handlers.saveHTMLHandler(req, res, datafile, htmlpath)
+});
+
+app.get("/commute-store/:store", (req, res) => {
+  console.log("Commute to " + req.params.store);
+  store = req.params.store;
+  datafile = __dirname + "/db/" + store;
+  handlers.checkAndPrepare(res, datafile);
 });
 
 app.post("/add", (req, res) => {

@@ -3,7 +3,7 @@ import {toNumDate as NumDate} from './modules/datetools';
 import { v4 as uuid } from 'uuid';
 import './App.css';
 
-function App() {
+const App = () => {
   const [data, setData] = React.useState([]);
 
   React.useEffect(
@@ -28,7 +28,6 @@ function App() {
     if (idx < 1) return;
     let copy = [...data];
     [copy[idx - 1], copy[idx]] = [copy[idx], copy[idx - 1]];
-    // [copy[idx - 1].id, copy[idx].id] = [copy[idx].id, copy[idx - 1].id];
     setData(copy);
   }
 
@@ -52,8 +51,6 @@ function App() {
     });
   }
 
-  // { msg.text.map(par => <p className="message-text">{ par }</p>) }
-  // { msg.time ? <span className="message-time">{ msg.time }</span> : '' }
   return (
     <div className="App">
       <button onClick={ handleSave }>SAVE</button>
@@ -63,7 +60,7 @@ function App() {
           <div className="message-datetime">
             { NumDate(msg.date) } { msg.time ? msg.time : '' }
           </div>
-          { msg.text.map(par => <p className="message-text" key={ uuid() }>{ par }</p>) }
+          { msg.text.map(p => <p className="message-text" key={ uuid() }>{ p }</p>) }
         </article>
       <div className="tools">
         <button onClick={event => handleJoin(msg.id, event)}>⇪</button>
