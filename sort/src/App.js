@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {toNumDate as NumDate} from './modules/datetools';
 import { v4 as uuid } from 'uuid';
@@ -7,25 +8,21 @@ const App = () => {
   const [data, setData] = React.useState([]);
   const [file, setFile] = React.useState('data.json');
 
-  React.useEffect(
-    () => {
-      return fetch('http://localhost:3003/get')
-      .then(res => res.json())
-      .then(res => setData(res))
-    }, []
-  );
-
-  const handleRefresh = async () => {
+  async function handleRefresh() {
     await fetch('http://localhost:3003/commute-store/' + file);
     await fetch('http://localhost:3003/get')
     .then(res => res.json())
     .then(res => setData(res));
   }
 
+  React.useEffect(() => {
+    handleRefresh();
+  }, []);
+
   const handleReid = () => {
     let copy = [...data];
     for (let i = 0; i < data.length; i++) {
-      copy[i].id = i;
+      copy[i].id = uuid();
     }
     setData(copy);
   }
@@ -67,13 +64,33 @@ const App = () => {
     });
   }
 
+  const handleAutoJoin = () => {
+    let copy = [...data];
+    for (let firstMsg of copy) {
+      for (let secondMsg of copy) {
+        if (secondMsg !== firstMsg 
+          && secondMsg.tags === firstMsg.tags 
+          && secondMsg.date === firstMsg.date 
+          && secondMsg.id !== 'deleted'
+          && firstMsg.id !== 'deleted') {
+            secondMsg.text.map(p => firstMsg.text.push(p));
+            secondMsg.id = 'deleted';
+        }
+      }
+    }
+    copy = copy.filter(msg => msg.id !== 'deleted');
+    setData(copy);
+  }
+
   return (
     <div className="App">
       Файл:
       <input value={file} className="mainInput" onChange={event => setFile(event.target.value) } />
       <button onClick={ handleRefresh }>Refresh</button>
-      <button onClick={ handleSave }>SAVE</button>
+      <button onClick={ handleSave }>Save</button>
+      <button onClick={ handleAutoJoin }>AutoJoin</button>
       <button onClick={ handleReid }>REid</button>
+      <label className="label">Сообщений: { data.length }</label>
       {data.map(msg => <div className="container" id={ msg.id } key={ msg.id }>
         <article className="message">
           <div className="message-tags">{ msg.tags }</div>

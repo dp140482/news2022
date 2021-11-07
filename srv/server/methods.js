@@ -1,5 +1,7 @@
+const { v4: uuid } = require("uuid");
+
 const add = (oldData, req) => {
-  const id = oldData.length;
+  const id = uuid();
   const item = { id, ...req.body };
   oldData.push(item);
   return JSON.stringify(oldData, null, 4);

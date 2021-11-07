@@ -56,3 +56,8 @@
   font-weight: bold;
   color: darkgray;
 }
+
+.label {
+  font-size: 11pt;
+  margin-left: 10px;
+}

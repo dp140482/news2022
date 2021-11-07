@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {v4 as uuid} from 'uuid';
 import './App.css';
 
 const App = () => {
@@ -12,6 +13,7 @@ const App = () => {
   const [time, setTime] = useState('');
   const [msgText, setMsgText] = useState('');
   const [tags, setTags] = useState('');
+  const [ableTags, setAbleTags] = useState(["Россия"]);
 
   const send = object => {
     return fetch('http://localhost:3003/add', {
@@ -52,8 +54,11 @@ const App = () => {
   const handleTimeChange = event => {
     setTime(event.target.value);
   }
-  const handleTagsChange = event => {
+  const handleInputChange = event => {
     setTags(event.target.value);
+  }
+  const handleInputBlur = () => {
+    if (!ableTags.includes(tags)) setAbleTags([...ableTags, tags]);
   }
 
   return (
@@ -74,7 +79,17 @@ const App = () => {
         </fieldset>
         <fieldset className="enFieldset downFieldset">
           <label>Темы: </label>
-          <input type="text" className="msgTagsInput" value={tags} onChange={handleTagsChange} />
+          <input 
+            type="text"
+            className="msgTagsInput"
+            list="dlist"
+            value={tags}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+          />
+          <datalist id="dlist">
+            { ableTags.map(tag => <option value={ tag } key={ uuid() } /> ) }
+          </datalist>
         </fieldset>
         <button className="sendBtn" onClick={handleButtonClick}>Отправить</button>
       </form>
