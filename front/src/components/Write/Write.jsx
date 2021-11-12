@@ -3,7 +3,7 @@ import {v4 as uuid} from 'uuid';
 import { Link } from 'react-router-dom';
 import './Write.css';
 
-const Write = () => {
+const Write = ({ableTags, setAbleTags}) => {
   const dateToJSON = date => {
     return date.getFullYear() + '-'
         + ((date.getMonth() < 9) ? '0' : '') + (date.getMonth() + 1) + '-'
@@ -14,10 +14,10 @@ const Write = () => {
   const [time, setTime] = useState('');
   const [msgText, setMsgText] = useState('');
   const [tags, setTags] = useState('');
-  const [ableTags, setAbleTags] = useState(["Россия"]);
+
 
   const send = object => {
-    return fetch('http://localhost:3003/add', {
+    return fetch('http://localhost:3003/add-msg/' + object.date, {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(object)
@@ -73,7 +73,7 @@ const Write = () => {
             <label>Время: </label>
             <input type="text" placeholder="HH:MM" value={time} onChange={handleTimeChange} />
           </div>
-          <Link to="/sort" className="link">Сортировка</Link>
+          <Link to={"/sort/" + date} className="link">Сортировка</Link>
         </fieldset>
         <fieldset className="enFieldset textFieldset">
           <label>Сообщение: </label>
@@ -94,7 +94,6 @@ const Write = () => {
           </datalist>
         </fieldset>
         <div className="buttons">
-            <button>Вычленить дату</button>
             <button onClick={handleButtonClick}>Отправить</button>
         </div>
       </form>

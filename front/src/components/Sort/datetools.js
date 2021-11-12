@@ -51,3 +51,9 @@ export const toRusWeekday = jsonDate => {
 export const dateJSON = dateobj => {
     return dateobj.getFullYear() + '-' + twoDigits(dateobj.getMonth + 1) + '-' + twoDigits(dateobj.getDate());
 }
+
+export const Yesterday = () => {
+    let date = new Date();
+    date.setDate(date.getDate() - 1);
+    return dateJSON(date);
+}

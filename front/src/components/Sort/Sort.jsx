@@ -3,6 +3,7 @@ import React from 'react';
 import {toNumDate as NumDate} from './datetools';
 import { v4 as uuid } from 'uuid';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router';
 import './Sort.css';
 import Refresh from './refresh.svg';
 import Save from './save.png';
@@ -10,12 +11,12 @@ import Merge from './merge.png';
 import HtmlPage from './html.png';
 
 const Sort = () => {
+    const { showDate } = useParams();
     const [data, setData] = React.useState([]);
-    const [file, setFile] = React.useState('data.json');
+    const [date, setDate] = React.useState(showDate);
   
-    async function handleRefresh() {
-      await fetch('http://localhost:3003/commute-store/' + file);
-      await fetch('http://localhost:3003/get')
+function handleRefresh() {
+    fetch('http://localhost:3003/get-all/' + date)
       .then(res => res.json())
       .then(res => setData(res));
     }
@@ -24,9 +25,8 @@ const Sort = () => {
       handleRefresh();
     }, []);
   
-    const handleHTML = async () => {
-      await fetch('http://localhost:3003/commute-store/' + file);
-      await fetch('http://localhost:3003/save/2021-11-09');
+    const handleHTML = () => {
+      fetch('http://localhost:3003/save/' + date);
     }
   
     const handleJoin = id => {
@@ -57,7 +57,7 @@ const Sort = () => {
     }
   
     const handleSave = () => {
-      return fetch('http://localhost:3003/changeAll', {
+      return fetch('http://localhost:3003/rewrite-all' + date, {
         method: 'PUT',
         headers: {
           "Content-Type": "application/json"
@@ -89,8 +89,8 @@ const Sort = () => {
       <div className="sort-app">
         <nav className="sort-nav">
             <div>
-              <label>Файл:</label>
-              <input value={file} onChange={event => setFile(event.target.value) } />
+              <label>Дата:</label>
+              <input value={date} onChange={event => setDate(event.target.value) } />
               <label>Сообщений: { data.length }</label>
             </div>
             <div>

@@ -3,120 +3,79 @@ const fs = require("fs");
 const htmltools = require("./htmltools");
 const datetools = require("./datetools");
 
-const actions = {
-  add: method.add,
-  change: method.change,
-  remove: method.remove
+const path = __dirname + "/db/";
+const pathHTML = __dirname + "/html/";
+
+const processWriteResult = (res, err) => {
+  if (err) {
+    res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
+  } else {
+    res.send(JSON.stringify({ result: 1 }));
+  }
 };
 
-const readHandler = (req, res, file) => {
-  fs.readFile(file, "utf-8", (err, data) => {
-    if (err) {
-      console.log(err);
-      res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
+const process = (req, res, err, data, options) => {
+  let file, newData;
+  if (err) 
+    if (options.todo === "add" || (options.todo === "rewrite" && options.method === "all" )) {
+      file = path + req.params.date + ".json";
+      fs.writeFile(file, method.add([], req), err => processWriteResult(res, err));
+      return;
     } else {
-      let content = JSON.parse(data);
-      if (req.params.date) {
-        content = content.filter(msg => msg.date === req.params.date);
+    console.log(err);
+    res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
+    return;
+  }
+  switch (options.todo) {
+
+    case "get": 
+      switch (options.method) {
+        case "msg":
+          res.send(JSON.parse(data).filter(msg => msg.id === req.params.id));
+          break;
+        case "all":
+          res.send(data);
       }
-      res.send(JSON.stringify(content));
-    }
-  });
+      break;
+
+    case "add":
+      file = path + req.params.date + ".json";
+      newData = method.add(JSON.parse(data), req);
+      fs.writeFile(file, newData, err => processWriteResult(res, err));
+      break;
+
+    case "save-html":
+      file = pathHTML + datetools.toNumDate(req.params.date) + ".html";
+      htmlContent = htmltools.toHTML(JSON.parse(data), req.params.date);
+      fs.writeFile(file, htmlContent, err => processWriteResult(res, err));
+      break;
+
+    case "rewrite":
+      if (options.method === "msg") {
+          file = path + req.params.date + ".json";
+          newData = method.change(JSON.parse(data), req);
+          fs.writeFile(file, newData, err => processWriteResult(res, err));
+      }
+      break;
+
+    case "delete":
+      if (options.method === "msg") {
+        file = path + req.params.date + ".json";
+        newData = method.remove(JSON.parse(data), req);
+        fs.writeFile(file, newData, err => processWriteResult(res, err));
+      }
+      break;
+  }
 };
 
-const saveHTMLHandler = (req, res, file, htmlpath) => {
-  const date = req.params.date;
-  fs.readFile(file, "utf-8", (err, data) => {
-    if (err) {
-      console.log(err);
-      res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
-    } else {
-      let htmlContent = htmltools.toHTML(JSON.parse(data), date);
-      fs.writeFile(htmlpath + datetools.toNumDate(date) + ".html", htmlContent, (err) => {
-        if (err) {
-          res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
-        } else {
-          res.send(JSON.stringify({ result: 1 }));
-        }
-      });
-    }
-  });
+const handler = (req, res, options) => {
+  const file = path + req.params.date + ".json";
+  if (options.todo === "rewrite" && options.method === "all")
+    fs.writeFile(file, req.body, err => processWriteResult(res, err));
+  else if (options.todo === "delete" && options.method === "all")
+    fs.writeFile(file, [], err => processWriteResult(res, err));
+  else
+    fs.readFile(file, "utf-8", (err, data) => process(req, res, err, data, options));
 };
 
-const acrcHandler = (req, res, action, file) => {
-  fs.readFile(file, "utf-8", (err, data) => {
-    if (err) {
-      res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
-    } else {
-      let newItem = actions[action](JSON.parse(data), req);
-      fs.writeFile(file, newItem, (err) => {
-        if (err) {
-          res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
-        } else {
-          res.send(JSON.stringify({ result: 1 }));
-        }
-      });
-    }
-  });
-};
-
-const checkAndPrepare = (res, file) => {
-  fs.readFile(file, "utf-8", (err) => {
-    if (err) {
-      fs.writeFile(file, JSON.stringify([], null, 4), (err) => {
-        if (err) {
-          console.error(err);
-          res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
-        } else {
-          res.send(JSON.stringify({ result: 1 }));
-        }
-      });
-    } else {
-      res.send(JSON.stringify({ result: 1 }));
-    }
-  });
-};
-
-const ultimaHandler = (req, res, file) => {
-  fs.writeFile(file, JSON.stringify(req.body, null, 4), (err) => {
-    if (err) {
-      console.error(err);
-      res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
-    } else {
-      console.log("Written down " + req.body.length + " messages");
-      res.send(JSON.stringify({ result: 1 }));
-    }
-  });
-};
-
-const cutHandler = (req, res, file, path) => {
-  fs.readFile(file, "utf-8", (err, data) => {
-    if (err) {
-      res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
-    } else {
-      const sdate = req.params.date;
-      const oData = JSON.parse(data);
-      const cutData = oData.filter(msg => msg.date === sdate);
-      const modData = oData.filter(msg => msg.date !== sdate);
-      fs.writeFile(path + sdate + '.json', JSON.stringify(cutData, null, 4), err => {
-        if (err) console.error(err);
-      });
-      fs.writeFile(file, JSON.stringify(modData, null, 4), err => {
-        if (err) {
-          res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
-        } else {
-          res.send(JSON.stringify(cutData));
-        }
-      });
-    }
-  });
-};
-
-module.exports = {
-  acrcHandler,
-  readHandler,
-  saveHTMLHandler,
-  checkAndPrepare,
-  ultimaHandler,
-  cutHandler
-};
+module.exports = {handler}
