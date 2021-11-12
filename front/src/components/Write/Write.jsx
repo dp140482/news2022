@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {v4 as uuid} from 'uuid';
-import './App.css';
+import { Link } from 'react-router-dom';
+import './Write.css';
 
-const App = () => {
+const Write = () => {
   const dateToJSON = date => {
-    return date.getFullYear() + '-' 
+    return date.getFullYear() + '-'
         + ((date.getMonth() < 9) ? '0' : '') + (date.getMonth() + 1) + '-'
         + ((date.getDate() < 10) ? '0' : '') + date.getDate();
   };
@@ -62,8 +63,8 @@ const App = () => {
   }
 
   return (
-    <div className="App">
-      <form className="sendForm">
+    <div className="write-app">
+        <form className="sendForm">
         <fieldset className="enFieldset upFieldset">
           <div>
             <label>Дата: </label>
@@ -72,6 +73,7 @@ const App = () => {
             <label>Время: </label>
             <input type="text" placeholder="HH:MM" value={time} onChange={handleTimeChange} />
           </div>
+          <Link to="/sort" className="link">Сортировка</Link>
         </fieldset>
         <fieldset className="enFieldset textFieldset">
           <label>Сообщение: </label>
@@ -91,10 +93,13 @@ const App = () => {
             { ableTags.map(tag => <option value={ tag } key={ uuid() } /> ) }
           </datalist>
         </fieldset>
-        <button className="sendBtn" onClick={handleButtonClick}>Отправить</button>
+        <div className="buttons">
+            <button>Вычленить дату</button>
+            <button onClick={handleButtonClick}>Отправить</button>
+        </div>
       </form>
     </div>
   );
 }
 
-export default App;
+export default Write;

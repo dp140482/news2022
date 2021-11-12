@@ -1,4 +1,4 @@
-.App {
+.write-app {
   padding: 15px 20px 5px 5px;
   height: 97vh;
   font-size: 13pt;
@@ -37,19 +37,13 @@
 }
 
 .timeBlock {
-  margin-left: 50px;
+  margin-left: 30px;
 }
 
 .msgTagsInput {
   width: 100%;
   margin: 0 5px;
   font-size: 13pt;
-}
-
-.sendBtn {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 7px;
 }
 
 .sendForm {
@@ -59,4 +53,45 @@
 .saveBtn {
   font-size: 16px;
   padding: 5px 10px;
+}
+
+.link {
+  font-size: 13pt;
+  margin-left: 20px;
+  text-decoration: none;
+  color: black;
+  background-color: whitesmoke;
+  padding: 2px 10px;
+  border: 1px solid gray;
+  border-radius: 7px;
+}
+
+.link:hover {
+  border-color: dimgray;
+  background-color: gainsboro;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.buttons button {
+  font-size: 16px;
+  padding: 5px 10px;
+  margin: 0 15px;
+  cursor: pointer;
+  color: black;
+  background-color: whitesmoke;
+  border: 1px solid gray;
+  border-radius: 7px;
+}
+
+.buttons button:hover {
+  border-color: dimgray;
+  background-color: gainsboro;
+}
+
+.buttons button:last-of-type {
+  margin-right: 0;
 }
