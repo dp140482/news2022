@@ -16,7 +16,6 @@ const processWriteResult = (res, err) => {
 
 const process = (req, res, err, data, options) => {
   let file, newData;
-  console.log("Handler: " + options.todo + options.method);
   if (err) 
     if (options.todo === "add" || (options.todo === "rewrite" && options.method === "all" )) {
       file = path + req.params.date + ".json";
@@ -74,7 +73,6 @@ const process = (req, res, err, data, options) => {
 
 const handler = (req, res, options) => {
   const file = path + req.params.date + ".json";
-  console.log("handler");
   if (options.todo === "rewrite" && options.method === "all")
     fs.writeFile(file,  JSON.stringify(req.body, null, 4), err => processWriteResult(res, err));
   else if (options.todo === "delete" && options.method === "all")

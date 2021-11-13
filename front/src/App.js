@@ -27,7 +27,22 @@ const App = () => {
                     tags={tags}
                     setTags={setTags}
                 />
-            } />
+            }>
+                <Route path=":date/:id" element={
+                    <Write
+                        ableTags={ableTags}
+                        setAbleTags={setAbleTags}
+                        date={date}
+                        setDate={setDate}
+                        time={time}
+                        setTime={setTime}
+                        msgText={msgText}
+                        setMsgText={setMsgText}
+                        tags={tags}
+                        setTags={setTags}
+                    />
+                } />
+            </Route>
             <Route path="/sort" element={<Sort />}>
                 <Route path=":showDate" element={<Sort />} />
             </Route>

@@ -7,9 +7,9 @@ const add = (oldData, req) => {
   return JSON.stringify(oldData, null, 4);
 };
 const change = (oldData, req) => {
-  const sid = req.params.id;
-  const found = oldData.find((el) => el.id === sid);
-  oldData[oldData.indexOf(found)] = req.body;
+  const id = req.params.id;
+  const found = oldData.find((el) => el.id === id);
+  oldData[oldData.indexOf(found)] = { id, ...req.body };
   return JSON.stringify(oldData, null, 4);
 };
 const remove = (oldData, req) => {

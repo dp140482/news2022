@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {v4 as uuid} from 'uuid';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './Write.css';
 
 const Write = (props) => {
@@ -11,8 +12,33 @@ const Write = (props) => {
     msgText, setMsgText,
     tags, setTags
   } = props;
+  const { date: paramDate, id } = useParams();
+
+
+  React.useEffect(() => {
+    console.log("id: "+ id);
+    if (id) {
+      fetch(`http://localhost:3003/get-msg/${paramDate}/${id}`)
+        .then(res => res.json())
+        .then(res => {
+          console.log(res[0]);
+          setDate(res[0].date);
+          setTime(res[0].time);
+          setTags(res[0].tags);
+          setAbleTags([...ableTags, res[0].tags]);
+          setMsgText(res[0].text[0]); // bug
+        });
+    }
+  }, [id]);
 
   const send = object => {
+    if (id) {
+      return fetch(`http://localhost:3003/rewrite-msg/${object.date}/${id}`, {
+        method: 'PUT',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(object)
+      });
+    }
     return fetch('http://localhost:3003/add-msg/' + object.date, {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
