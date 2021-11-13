@@ -16,6 +16,7 @@ const processWriteResult = (res, err) => {
 
 const process = (req, res, err, data, options) => {
   let file, newData;
+  console.log("Handler: " + options.todo + options.method);
   if (err) 
     if (options.todo === "add" || (options.todo === "rewrite" && options.method === "all" )) {
       file = path + req.params.date + ".json";
@@ -51,10 +52,13 @@ const process = (req, res, err, data, options) => {
       break;
 
     case "rewrite":
+      file = path + req.params.date + ".json";
       if (options.method === "msg") {
-          file = path + req.params.date + ".json";
           newData = method.change(JSON.parse(data), req);
           fs.writeFile(file, newData, err => processWriteResult(res, err));
+      } else if (options.method === "all") {
+        console.log("rewrite all");
+        fs.writeFile(file, method.add([], req), err => processWriteResult(res, err));
       }
       break;
 
@@ -70,10 +74,11 @@ const process = (req, res, err, data, options) => {
 
 const handler = (req, res, options) => {
   const file = path + req.params.date + ".json";
+  console.log("handler");
   if (options.todo === "rewrite" && options.method === "all")
-    fs.writeFile(file, req.body, err => processWriteResult(res, err));
+    fs.writeFile(file,  JSON.stringify(req.body, null, 4), err => processWriteResult(res, err));
   else if (options.todo === "delete" && options.method === "all")
-    fs.writeFile(file, [], err => processWriteResult(res, err));
+    fs.writeFile(file, JSON.stringify([], null, 4), err => processWriteResult(res, err));
   else
     fs.readFile(file, "utf-8", (err, data) => process(req, res, err, data, options));
 };

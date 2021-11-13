@@ -57,7 +57,7 @@ function handleRefresh() {
     }
   
     const handleSave = () => {
-      return fetch('http://localhost:3003/rewrite-all' + date, {
+      return fetch('http://localhost:3003/rewrite-all/' + date, {
         method: 'PUT',
         headers: {
           "Content-Type": "application/json"

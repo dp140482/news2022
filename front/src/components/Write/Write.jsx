@@ -1,20 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {v4 as uuid} from 'uuid';
 import { Link } from 'react-router-dom';
 import './Write.css';
 
-const Write = ({ableTags, setAbleTags}) => {
-  const dateToJSON = date => {
-    return date.getFullYear() + '-'
-        + ((date.getMonth() < 9) ? '0' : '') + (date.getMonth() + 1) + '-'
-        + ((date.getDate() < 10) ? '0' : '') + date.getDate();
-  };
-
-  const [date, setDate] = useState(dateToJSON(new Date()));
-  const [time, setTime] = useState('');
-  const [msgText, setMsgText] = useState('');
-  const [tags, setTags] = useState('');
-
+const Write = (props) => {
+  const {
+    ableTags, setAbleTags,
+    date, setDate,
+    time, setTime,
+    msgText, setMsgText,
+    tags, setTags
+  } = props;
 
   const send = object => {
     return fetch('http://localhost:3003/add-msg/' + object.date, {
@@ -68,10 +64,21 @@ const Write = ({ableTags, setAbleTags}) => {
         <fieldset className="enFieldset upFieldset">
           <div>
             <label>Дата: </label>
-            <input type="text" value={date} onChange={handleDateChange} />
+            <input
+              type="text"
+              value={date}
+              onChange={handleDateChange}
+              className="dateTimeInputs"
+            />
           </div><div className="timeBlock">
             <label>Время: </label>
-            <input type="text" placeholder="HH:MM" value={time} onChange={handleTimeChange} />
+            <input 
+              type="text"
+              placeholder="HH:MM"
+              value={time}
+              onChange={handleTimeChange}
+              className="dateTimeInputs"
+            />
           </div>
           <Link to={"/sort/" + date} className="link">Сортировка</Link>
         </fieldset>
