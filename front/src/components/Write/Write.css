@@ -21,11 +21,11 @@
   height: 78vh;
   font-family: "Helvetica Neue", "Calibri", "Arial", sans-serif;
   font-size: 13pt;
-  line-height: 130%;
+  line-height: 135%;
   text-align: left;
   outline-color: gray;
   outline-width: 1px;
-  padding: 0 4px;
+  padding: 2px 4px;
 }
 
 .upFieldset {

@@ -66,25 +66,13 @@ const Sort = () => {
       body: JSON.stringify(data)
     });
   }
-  
+
   const handleAutoJoin = () => {
-    let copy = [...data];
-    for (let firstMsg of copy) {
-      for (let secondMsg of copy) {
-        if (secondMsg !== firstMsg 
-          && secondMsg.tags === firstMsg.tags 
-          && secondMsg.date === firstMsg.date 
-          && secondMsg.id !== 'deleted'
-          && firstMsg.id !== 'deleted'
-          && secondMsg.time === firstMsg.time) {
-            secondMsg.text.map(p => firstMsg.text.push(p));
-            secondMsg.id = 'deleted';
-        }
-      }
-    }
-    copy = copy.filter(msg => msg.id !== 'deleted');
-    setData(copy);
+    fetch('http://localhost:3003/collect/' + date)
+      .then(res => res.json())
+      .then(res => setData(res));
   }
+
 
   //⟳
   return (

@@ -48,8 +48,14 @@ const toRusWeekday = jsonDate => {
     return ruWeekday(dateobj.getDay());
 }
 
+const toMinutes = time => {
+    const [hours, minutes] = time.split(':');
+    return +hours * 60 + +minutes;
+}
+
 module.exports = {
     toRusString,
     toNumDate,
-    toRusWeekday
+    toRusWeekday,
+    toMinutes
 }

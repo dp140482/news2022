@@ -19,6 +19,7 @@ app.use((req, res, next) => {
 app.get("/get-all/:date", (req, res) => handler(req, res, { todo: "get", method: "all" }));
 app.get("/get-msg/:date/:id", (req, res) => handler(req, res, {todo: "get", method: "msg"}));
 app.get("/save/:date", (req, res) => handler(req, res, {todo: "save-html"}));
+app.get("/collect/:date", (req, res) => handler(req, res, {todo: "collect"}));
 
 app.post("/add-msg/:date", (req, res) => handler(req, res, {todo: "add"}));
 

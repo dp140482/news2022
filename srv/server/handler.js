@@ -68,6 +68,9 @@ const process = (req, res, err, data, options) => {
         fs.writeFile(file, newData, err => processWriteResult(res, err));
       }
       break;
+
+    case "collect":
+      res.send(method.collect(JSON.parse(data)));
   }
 };
 
