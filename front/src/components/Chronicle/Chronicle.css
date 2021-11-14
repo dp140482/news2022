@@ -1,0 +1,46 @@
+.chronicle {
+  max-width: 600px;
+  text-align: justify;
+  padding: 10px 0;
+  line-height: 150%;
+}
+
+.chronicle-tags {
+  color: dimgray;
+  text-align: left;
+  padding: 0;
+  font-weight: normal;
+  font-size: 14pt;
+}
+
+.chronicle-tags::before {
+  content: "Темы: ";
+  font-weight: bold;
+}
+
+.chrono-msg-time {
+  color: darkviolet;
+  font-weight: bold;
+  position: absolute;
+  left: 1.7cm;
+}
+
+.chrono-text {
+  margin: 1px 0;
+  text-indent: 1cm;
+}
+
+.chrono-text:first-of-type {
+  text-indent: 2cm;
+}
+
+.chronicle-date {
+  font-size: 9pt;
+  color: dimgray;
+}
+
+.chronicle-date::before {
+  content: "Дата: ";
+  font-weight: bold;
+  color: darkgray;
+}

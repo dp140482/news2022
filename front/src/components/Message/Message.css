@@ -1,0 +1,43 @@
+.message {
+  max-width: 600px;
+  color: black;
+  text-align: justify;
+  padding: 10px 0;
+  line-height: 150%;
+}
+
+.message-tags {
+  color: dimgray;
+  text-align: left;
+  padding: 0;
+}
+
+.message-tags::before {
+  content: "Темы: ";
+  font-weight: bold;
+}
+
+.message-time {
+  color: darkviolet;
+  font-weight: bold;
+}
+
+.message-text {
+  margin: 1px 0;
+  text-indent: 1cm;
+}
+
+.message-text:first-of-type {
+  text-indent: 0;
+}
+
+.message-datetime {
+  font-size: 9pt;
+  color: dimgray;
+}
+
+.message-datetime::before {
+  content: "Дата/время: ";
+  font-weight: bold;
+  color: darkgray;
+}

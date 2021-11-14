@@ -1,0 +1,30 @@
+.sort-nav {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.leftside {
+  margin-right: 10px;
+}
+
+.sort-nav button {
+  margin-top: 5px;
+}
+
+.sort-nav label {
+  font-size: 11pt;
+  margin: 0 2px;
+}
+
+.sort-nav input {
+  font-size: 12pt;
+}
+
+.sort-nav img {
+  width: 25px;
+}
