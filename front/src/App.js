@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {dateJSON} from './components/Sort/datetools';
-import Write from './components/Write/Write';
-import Sort from './components/Sort/Sort';
+import Write from './components/Write';
+import Sort from './components/Sort';
 
 const App = () => {
     const [ableTags, setAbleTags] = React.useState(["Россия"]);
@@ -28,7 +28,7 @@ const App = () => {
                     setTags={setTags}
                 />
             }>
-                <Route path=":date/:id" element={
+                <Route path=":date/:id/:paragraph" element={
                     <Write
                         ableTags={ableTags}
                         setAbleTags={setAbleTags}

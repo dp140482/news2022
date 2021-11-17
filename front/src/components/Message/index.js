@@ -26,7 +26,7 @@ const Message = ({ msg }) => {
               <p 
                 className="message-text" 
                 key={ uuid() }
-                onClick={ () => { navigate(`/${msg.date}/${msg.id}`, { replace: true }) } }
+                onClick={ () => { navigate(`/${msg.date}/${msg.id}/${msg.text.indexOf(p)}`, { replace: true }) } }
               >{ p }</p>)
             }
         </article>

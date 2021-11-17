@@ -49,7 +49,7 @@ const Sort = () => {
 
   return (
       <div className="sort-app">
-        <SortNav date={date} setDate={setDate} dataType={dataType} handlers={handlers} />
+        <SortNav date={date} setDate={setDate} handlers={handlers} />
         { dataType === 'collection' 
           ? <Chronicles chronicles={chronicles} setChronicles={setChronicles} /> 
           : ''

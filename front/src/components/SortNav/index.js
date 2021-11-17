@@ -7,9 +7,9 @@ import Merge from './merge.png';
 import HtmlPage from './html.png';
 
 const SortNav = (props) => {
-    const {date, setDate, dataType, handlers} = props;
+    const {date, setDate, handlers} = props;
 
-    const handleHTML = () => {
+    const handlerHTML = () => {
         fetch('http://localhost:3003/save/' + date);
     }
 
@@ -23,13 +23,13 @@ const SortNav = (props) => {
             <button onClick={ handlers.refresh }>
                 <img src={Refresh} alt="Refresh" title="Refresh" />
             </button>
-            <button onClick={ handlers.save } disabled={() => {return (dataType === "collection")}}>
+            <button onClick={ handlers.save }>
                 <img src={Save} alt="Save" title="Save" />
             </button>
             <button onClick={ handlers.collect }>
                 <img src={Merge} alt="AutoJoin" title="AutoJoin" />
             </button>
-            <button onClick={ handleHTML }>
+            <button onClick={ handlerHTML }>
                 <img src={HtmlPage} alt="HTML" title="HTML" />
             </button>
             <Link to="/" className="link">Запись</Link>

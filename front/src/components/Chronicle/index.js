@@ -16,16 +16,6 @@ const Chronicle = ({ chrono }) => {
             + '.' + dateobj.getFullYear();
     };
 
-/*
-            { msg.text.map(p => 
-              <p 
-                className="message-text" 
-                key={ uuid() }
-                onClick={ () => { navigate(`/${msg.date}/${msg.id}`, { replace: true }) } }
-              >{ p }</p>)
-            }
-            */
-
     return (
         <article className="chronicle">
             <h2 className="chronicle-tags">{ chrono.tags }</h2>

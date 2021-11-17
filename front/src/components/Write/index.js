@@ -2,9 +2,12 @@
 import React from 'react';
 import {v4 as uuid} from 'uuid';
 import { Link, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import './Write.css';
 
 const Write = (props) => {
+  const navigate = useNavigate();
+
   const {
     ableTags, setAbleTags,
     date, setDate,
@@ -12,32 +15,35 @@ const Write = (props) => {
     msgText, setMsgText,
     tags, setTags
   } = props;
-  const { date: paramDate, id } = useParams();
+  const { date: paramDate, id, paragraph } = useParams();
 
+  const [recievedText, setRecievedText] = React.useState([]);
 
   React.useEffect(() => {
-    console.log("id: "+ id);
     if (id) {
       fetch(`http://localhost:3003/get-msg/${paramDate}/${id}`)
         .then(res => res.json())
+        .then(res => res[0])
         .then(res => {
-          console.log(res[0]);
-          setDate(res[0].date);
-          setTime(res[0].time);
-          setTags(res[0].tags);
-          setAbleTags([...ableTags, res[0].tags]);
-          setMsgText(res[0].text[0]); // bug
+          setDate(res.date);
+          setTime(res.time);
+          setTags(res.tags);
+          if (!ableTags.includes(res.tags)) setAbleTags([...ableTags, res.tags]);
+          setRecievedText(res.text);
+          setMsgText(res.text[paragraph]);
         });
     }
   }, [id]);
 
   const send = object => {
     if (id) {
-      return fetch(`http://localhost:3003/rewrite-msg/${object.date}/${id}`, {
+      fetch(`http://localhost:3003/rewrite-msg/${object.date}/${id}`, {
         method: 'PUT',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(object)
       });
+      navigate('/', { replace: true });
+      return;
     }
     return fetch('http://localhost:3003/add-msg/' + object.date, {
       method: 'POST',
@@ -58,12 +64,18 @@ const Write = (props) => {
 
   const handleButtonClick = event => {
     event.preventDefault();
-    let textToSent = textReplacer(msgText);
+    let textToSend = recievedText;
+    const changedText = textReplacer(msgText);
+    if (id) 
+      textToSend[paragraph] = changedText;
+    else
+      textToSend = [changedText];
+    const tagsToSend = textReplacer(tags);
     send({
       date: date,
       time: time,
-      tags: tags, 
-      text: [textToSent]
+      tags: tagsToSend, 
+      text: textToSend
     });
     setMsgText('');
   }
