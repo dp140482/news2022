@@ -1,6 +1,5 @@
 # dependencies
-/srv/node_modules
-/front/node_modules
+/*/node_modules
 /front/.pnp
 .pnp.js
 
@@ -15,7 +14,10 @@
 # misc
 .DS_Store
 /srv/server/db
+/srv2/db
+/srv2/html
 /srv/server/css
+/srv/server/html
 
 .env.local
 .env.development.local

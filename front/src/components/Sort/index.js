@@ -15,7 +15,7 @@ const Sort = () => {
 
   const handlers = {
     refresh: () => {
-      fetch('http://localhost:3003/get-all/' + date)
+      fetch('http://localhost:3003/get/' + date)
         .catch(err => console.error(err))
         .then(res => res.json())
         .then(res => {
@@ -24,6 +24,7 @@ const Sort = () => {
         });
     },
     save: () => {
+      /*
       return fetch('http://localhost:3003/rewrite-all/' + date, {
         method: 'PUT',
         headers: {
@@ -31,8 +32,10 @@ const Sort = () => {
         },
         body: JSON.stringify(data)
       });
+      */
     },
     collect: () => {
+      /*
       fetch('http://localhost:3003/collect/' + date)
         .then(res => res.json())
         .then(res => {
@@ -40,6 +43,7 @@ const Sort = () => {
           setChronicles(res.chronicles);
           setDataType('collection');
         });
+      */
     }
   }
   

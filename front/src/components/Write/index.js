@@ -45,8 +45,8 @@ const Write = (props) => {
       navigate('/', { replace: true });
       return;
     }
-    return fetch('http://localhost:3003/add-msg/' + object.date, {
-      method: 'POST',
+    return fetch('http://localhost:3003/set/' + object.date, {
+      method: 'PUT',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(object)
     });
@@ -64,6 +64,8 @@ const Write = (props) => {
 
   const handleButtonClick = event => {
     event.preventDefault();
+
+    /*
     let textToSend = recievedText;
     const changedText = textReplacer(msgText);
     if (id) 
@@ -77,6 +79,8 @@ const Write = (props) => {
       tags: tagsToSend, 
       text: textToSend
     });
+    */
+   
     setMsgText('');
   }
 

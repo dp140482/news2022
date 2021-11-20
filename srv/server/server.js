@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const {handler} = require("./handler");
+const handler = require("./handler");
 
 app.use(express.json());
 app.use(cors());
