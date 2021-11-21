@@ -18,6 +18,8 @@
 /srv2/html
 /srv/server/css
 /srv/server/html
+/converter/*.json
+/converter/conv
 
 .env.local
 .env.development.local

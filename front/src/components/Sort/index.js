@@ -56,6 +56,7 @@ const Sort = () => {
       let deleted = [];
       let copy = [...data];
       copy.forEach(one => {
+        if (deleted.includes(one.id)) return;
         copy.forEach(two => {
           if (deleted.includes(two.id) || one === two) return;
           if (two.tags.includes(one.tags)) one.tags = two.tags;
