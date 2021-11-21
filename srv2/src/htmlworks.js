@@ -40,7 +40,7 @@ const printMessageHeaders = msg => {
 };
 
 const printMessage = msg => {
-    return '<p>' + printMessageHeaders(msg) + `
+    return '<p' + (msg.time ? ` class="force-indent">` : '>') + printMessageHeaders(msg) + `
         ${ msg.text}
     </p>`;
 };
