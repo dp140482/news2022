@@ -1,0 +1,46 @@
+.article {
+  max-width: 600px;
+  min-width: 300px;
+  padding: 10px 0;
+}
+
+.article-tags {
+  color: dimgray;
+  text-align: left;
+  padding: 0;
+  padding-bottom: 3px;
+  font-weight: normal;
+  font-size: 12pt;
+}
+
+.article-tags::before {
+  content: "Темы: ";
+  font-weight: bold;
+}
+
+.article-msg-time {
+  color: darkviolet;
+  font-weight: bold;
+  position: absolute;
+  left: 1.7cm;
+}
+
+.article-text {
+  margin: 1px 0;
+  text-indent: 1cm;
+}
+
+.article-text:first-of-type {
+  text-indent: 2cm;
+}
+
+.article-date {
+  font-size: 9pt;
+  color: dimgray;
+}
+
+.article-date::before {
+  content: "Дата: ";
+  font-weight: bold;
+  color: darkgray;
+}

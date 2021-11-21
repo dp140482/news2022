@@ -1,0 +1,111 @@
+.write-app {
+  padding: 2px;
+  height: 99.5vh;
+  font-size: 12pt;
+  background-color: antiquewhite;
+  font-family: "Helvetica Neue", "Calibri", "Arial", sans-serif;
+}
+
+.enFieldset {
+  border: none;
+}
+
+.textFieldset {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 1px;
+}
+
+.msgTextArea {
+  height: 78vh;
+  font-family: "Helvetica Neue", "Calibri", "Arial", sans-serif;
+  font-size: 13pt;
+  line-height: 135%;
+  text-align: left;
+  outline-color: gray;
+  outline-width: 1px;
+  padding: 2px 4px;
+}
+
+.upFieldset {
+  display: flex;
+  flex-direction: row;
+  min-width: 500px;
+}
+
+.downFieldset {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+}
+
+.timeBlock {
+  margin-left: 30px;
+}
+
+.msgTagsInput {
+  width: 100%;
+  margin: 0 5px;
+  font-size: 13pt;
+  outline-color: gray;
+  outline-width: 1px;
+}
+
+.dateTimeInputs {
+  font-size: 12pt;
+  outline-color: gray;
+  outline-width: 1px;
+  width: 100px;
+}
+
+.sendForm {
+  text-align: right;
+}
+
+.saveBtn {
+  font-size: 16px;
+  padding: 5px 10px;
+}
+
+.link {
+  font-size: 13pt;
+  margin-left: 20px;
+  text-decoration: none;
+  color: black;
+  background-color: whitesmoke;
+  padding: 2px 10px;
+  border: 1px solid gray;
+  border-radius: 7px;
+}
+
+.link:hover {
+  border-color: dimgray;
+  background-color: gainsboro;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 5px;
+}
+
+.buttons button {
+  font-size: 16px;
+  padding: 5px 10px;
+  margin: 0 15px;
+  cursor: pointer;
+  color: black;
+  background-color: whitesmoke;
+  border: 1px solid gray;
+  border-radius: 7px;
+}
+
+.buttons button:hover {
+  border-color: dimgray;
+  background-color: gainsboro;
+}
+
+.buttons button:last-of-type {
+  margin-right: 0;
+}

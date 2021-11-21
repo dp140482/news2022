@@ -1,0 +1,10 @@
+.sort-app {
+  font-size: 10pt;
+  font-family: "Helvetica Neue", "Calibri", "Arial", sans-serif;
+  padding: 0 30px 30px;
+}
+
+.container {
+  display: flex;
+  align-items: flex-start;
+}
