@@ -8,7 +8,7 @@ const SortTools = (props) => {
         const idx = data.findIndex(msg => msg.id === id);
         if (idx < 1) return;
         let copy = [...data];
-        copy[idx].text.map(p => copy[idx-1].text.push(p));
+        copy[idx].messages.map(p => copy[idx-1].messages.push(p));
         copy = copy.filter(msg => msg.id !== id);
         setData(copy);
     };

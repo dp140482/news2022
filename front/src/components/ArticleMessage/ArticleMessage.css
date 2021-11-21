@@ -1,0 +1,22 @@
+.message {
+  color: black;
+  text-align: justify;
+  line-height: 150%;
+  margin: 1px 0;
+  text-indent: 1cm;
+}
+
+.message:first-of-type {
+  text-indent: 0;
+}
+
+.message-time {
+  color: darkviolet;
+  font-weight: bold;
+  padding-right: 5px;
+}
+
+.message-tags {
+  color: dimgray;
+  font-style: italic;
+}

@@ -1,45 +1,45 @@
-.chronicle {
+.article {
   max-width: 600px;
-  text-align: justify;
+  min-width: 300px;
   padding: 10px 0;
-  line-height: 150%;
 }
 
-.chronicle-tags {
+.article-tags {
   color: dimgray;
   text-align: left;
   padding: 0;
+  padding-bottom: 3px;
   font-weight: normal;
-  font-size: 14pt;
+  font-size: 12pt;
 }
 
-.chronicle-tags::before {
+.article-tags::before {
   content: "Темы: ";
   font-weight: bold;
 }
 
-.chrono-msg-time {
+.article-msg-time {
   color: darkviolet;
   font-weight: bold;
   position: absolute;
   left: 1.7cm;
 }
 
-.chrono-text {
+.article-text {
   margin: 1px 0;
   text-indent: 1cm;
 }
 
-.chrono-text:first-of-type {
+.article-text:first-of-type {
   text-indent: 2cm;
 }
 
-.chronicle-date {
+.article-date {
   font-size: 9pt;
   color: dimgray;
 }
 
-.chronicle-date::before {
+.article-date::before {
   content: "Дата: ";
   font-weight: bold;
   color: darkgray;

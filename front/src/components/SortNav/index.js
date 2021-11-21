@@ -23,11 +23,11 @@ const SortNav = (props) => {
             <button onClick={ handlers.refresh }>
                 <img src={Refresh} alt="Refresh" title="Refresh" />
             </button>
-            <button onClick={ handlers.save }>
-                <img src={Save} alt="Save" title="Save" />
-            </button>
             <button onClick={ handlers.collect }>
                 <img src={Merge} alt="AutoJoin" title="AutoJoin" />
+            </button>
+            <button onClick={ handlers.save }>
+                <img src={Save} alt="Save" title="Save" />
             </button>
             <button onClick={ handlerHTML }>
                 <img src={HtmlPage} alt="HTML" title="HTML" />

@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {v4 as uuid} from 'uuid';
-import { Link, useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router';
+import { Link, /* useParams*/ } from 'react-router-dom';
+// import { useNavigate } from 'react-router';
 import './Write.css';
 
 const Write = (props) => {
-  const navigate = useNavigate();
+ // const navigate = useNavigate();
 
   const {
     ableTags, setAbleTags,
@@ -15,10 +15,11 @@ const Write = (props) => {
     msgText, setMsgText,
     tags, setTags
   } = props;
-  const { date: paramDate, id, paragraph } = useParams();
+//  const { date: paramDate, id, paragraph } = useParams();
 
-  const [recievedText, setRecievedText] = React.useState([]);
+  // const [recievedText, setRecievedText] = React.useState([]);
 
+  /*
   React.useEffect(() => {
     if (id) {
       fetch(`http://localhost:3003/get-msg/${paramDate}/${id}`)
@@ -34,8 +35,10 @@ const Write = (props) => {
         });
     }
   }, [id]);
+  */
 
   const send = object => {
+    /*
     if (id) {
       fetch(`http://localhost:3003/rewrite-msg/${object.date}/${id}`, {
         method: 'PUT',
@@ -45,8 +48,9 @@ const Write = (props) => {
       navigate('/', { replace: true });
       return;
     }
-    return fetch('http://localhost:3003/set/' + object.date, {
-      method: 'PUT',
+    */
+    return fetch('http://localhost:3003/add/' + object.date, {
+      method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(object)
     });
@@ -60,10 +64,19 @@ const Write = (props) => {
     out = out.replace(/(?<!»,) - /g, ' — ');
     out = out.replace(/(«[^»]*)«([^»]*)»/g, '$1„$2“');
     return out;
-  }
+  } 
 
   const handleButtonClick = event => {
     event.preventDefault();
+    const msgid = uuid();
+    let pkg = {
+      date,
+      message: {id: msgid, text: textReplacer(msgText)},
+      article: {id: uuid(), parts: [ msgid ], tags: textReplacer(tags)}
+    };
+    if (time) pkg.article = {...pkg.article, time};
+    send(pkg);
+    setMsgText('');
 
     /*
     let textToSend = recievedText;
@@ -80,8 +93,6 @@ const Write = (props) => {
       text: textToSend
     });
     */
-   
-    setMsgText('');
   }
 
   const handleTextChange = event => {
